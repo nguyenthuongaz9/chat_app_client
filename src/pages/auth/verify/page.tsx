@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuthStore } from "@/hooks/useAuthStore";
+import { HOST } from "@/utils/constaints";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
@@ -19,7 +20,7 @@ const Verify = () => {
 
   const onClick = async () => {
     try {
-      const res = await axios.post('http://localhost:8080/api/auth/resend-verification-code', {
+      const res = await axios.post(`${HOST}/api/auth/resend-verification-code`, {
         email:user?.email,
       },{
         withCredentials: true
@@ -32,7 +33,7 @@ const Verify = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      const res = await axios.post('http://localhost:8080/api/auth/verify-email',{
+      const res = await axios.post(`${HOST}/api/auth/verify-email`,{
         email: user?.email,
         code: data.code
       })    

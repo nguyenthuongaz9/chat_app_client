@@ -1,3 +1,4 @@
+import { HOST } from "@/utils/constaints";
 import { createContext, useContext, useEffect, useState } from "react";
 import { io as ClientIo } from 'socket.io-client';
 
@@ -20,7 +21,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
-        const socketInstance = ClientIo('http://localhost:8080');
+        const socketInstance = ClientIo(`${HOST}`);
 
         socketInstance.on("connect", () => {
             setIsConnected(true);

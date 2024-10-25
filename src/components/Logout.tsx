@@ -5,6 +5,7 @@ import React from 'react'
 import { Button } from './ui/button'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { HOST } from '@/utils/constaints'
 
 
 export const Logout = ({
@@ -17,7 +18,7 @@ export const Logout = ({
 
     const onClick = async () => {
        try {
-        const res = await axios.post('http://localhost:8080/api/auth/logout')
+        const res = await axios.post(`${HOST}api/auth/logout`)
         if(res.status === 200) {
             toast.success('Logged out')
             location.reload()
