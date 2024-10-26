@@ -14,7 +14,6 @@ interface AuthStore {
   checkAuth: () => Promise<void>;
 }
 
-axios.defaults.withCredentials = true;
 
 export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
@@ -25,7 +24,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   signup: async (email: string, password: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post(`${HOST}/api/auth/register`, { email, password });
+      const response = await axios.post(`${HOST}/api/auth/register`, { email, password }, { withCredentials: true });
       set({ user: response.data.user, isAuthenticated: true, isLoading: false });
       return response;
     } catch (error) {
@@ -37,7 +36,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   login: async (email: string, password: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post(`${HOST}/api/auth/login`, { email, password });
+      const response = await axios.post(`${HOST}/api/auth/login`, { email, password }, { withCredentials: true});
       set({ user: response.data.user, isAuthenticated: true, isLoading: false });
       return response;
     } catch (error) {
@@ -49,7 +48,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
     try {
-      const response = await axios.get(`${HOST}/api/auth/check-auth`);
+      const response = await axios.get(`${HOST}/api/auth/check-auth`, { withCredentials: true });
       set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
     } catch (error) {
       set({ error: null, isCheckingAuth: false, isAuthenticated: false });
