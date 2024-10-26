@@ -44,7 +44,7 @@ const AuthRoute = ({ children }: { children: React.ReactNode }) => {
 
 const SetUpProfileRoute = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuthStore();
-  
+
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
@@ -71,61 +71,65 @@ const App = () => {
     );
   }
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/auth"
-          element={
-            <AuthRoute>
-              <Auth />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="/verify-email"
-          element={
-            <VerifyRoute>
-              <VerifyLayout />
-            </VerifyRoute>
-          }
-        />
-        <Route
-          path="/conversations"
-          element={
-            <ProtectedRoute>
-              <RootLayout />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/conversations/:id"
-          element={
-            <ProtectedRoute>
-              <ConversationIdLayout />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/setup-profile"
-          element={
-            <SetUpProfileRoute>
-              <SetupPage />
-            </SetUpProfileRoute>
-          }
-        />
-        <Route
-          path="/users"
-          element={
-            <ProtectedRoute>
-              <UserLayout />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="*" element={<Navigate to="/auth" />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  if (!isCheckingAuth) {
+
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/auth"
+            element={
+              <AuthRoute>
+                <Auth />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/verify-email"
+            element={
+              <VerifyRoute>
+                <VerifyLayout />
+              </VerifyRoute>
+            }
+          />
+          <Route
+            path="/conversations"
+            element={
+              <ProtectedRoute>
+                <RootLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/conversations/:id"
+            element={
+              <ProtectedRoute>
+                <ConversationIdLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/setup-profile"
+            element={
+              <SetUpProfileRoute>
+                <SetupPage />
+              </SetUpProfileRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute>
+                <UserLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/auth" />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  }
+
 };
 
 export default App;
