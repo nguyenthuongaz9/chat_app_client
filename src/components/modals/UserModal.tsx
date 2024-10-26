@@ -61,20 +61,24 @@ export function UserModal() {
         }
 
 
+        try {
+            await axios.post(`${HOST}/api/users/${user.id}`, formData)
+                .then(res => {
+                    if (res.status === 200) {
+                        toast.success('Profile updated successfully');
+                        setUser(res.data);
+                        console.log("Updated user data:", res.data);
+                    } else {
+                        toast.error('Error updating profile');
+                    }
+                })
+                .finally(() => {
+                    location.reload();
+                });            
+        } catch (error) {
+            console.log(error)
+        }
 
-        await axios.post(`${HOST}/api/users/${user.id}`, formData)
-            .then(res => {
-                if (res.status === 200) {
-                    toast.success('Profile updated successfully');
-                    setUser(res.data);
-                    console.log("Updated user data:", res.data);
-                } else {
-                    toast.error('Error updating profile');
-                }
-            })
-            .finally(() => {
-                location.reload();
-            });
 
 
     };
