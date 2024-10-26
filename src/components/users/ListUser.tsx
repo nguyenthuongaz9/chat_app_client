@@ -70,8 +70,8 @@ const ListUser = () => {
       const response = await axios.post(`${HOST}/api/conversations`, formData, {
         headers: {
           'Content-Type': 'application/json',
-          withCredentials: true,
         },
+        withCredentials: true,
       });
 
       if (response.status === 200 || response.status === 201) {
