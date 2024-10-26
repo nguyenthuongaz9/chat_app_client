@@ -19,17 +19,9 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (!isAuthenticated || !user || !user.isVerify || !user.isSetupProfile) {
     return <Navigate to='/auth' replace />;
   }
-  if (!user.isVerify) {
-    return <Navigate to='/verify-email' replace />;
-  }
-  if (!user.isSetupProfile) {
-    return <Navigate to='/setup-profile' replace />;
-  }
 
   return <>{children}</>;
 };
-
-
 
 const VerifyRoute = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuthStore();
@@ -46,17 +38,13 @@ const AuthRoute = ({ children }: { children: React.ReactNode }) => {
   if (!isAuthenticated) {
     return <>{children}</>;
   }
-  if (!user.isVerify) {
-    return <Navigate to='/verify-email' replace />;
-  }
-  if (!user.isSetupProfile) {
-    return <Navigate to='/setup-profile' replace />;
-  }
-  return <Navigate to='/conversations' replace />;
+
+  return <Navigate to={user.isVerify ? (user.isSetupProfile ? '/conversations' : '/setup-profile') : '/verify-email'} replace />;
 };
 
 const SetUpProfileRoute = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuthStore();
+  
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
@@ -97,7 +85,7 @@ const App = () => {
         <Route
           path="/verify-email"
           element={
-            <VerifyRoute>/
+            <VerifyRoute>
               <VerifyLayout />
             </VerifyRoute>
           }
@@ -118,7 +106,6 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/setup-profile"
           element={
