@@ -54,7 +54,10 @@ const SearchUser = () => {
 
 
             const response = await axios.post(`${HOST}/api/conversations`, formData, {
-               
+                headers: {
+                    'Content-Type': 'application/json',
+                    
+                },
                 withCredentials: true
             });
 

@@ -15,18 +15,18 @@ const ListUser = () => {
   const {
     data,
     fetchNextPage,
-    fetchPreviousPage, 
+    fetchPreviousPage,
     hasNextPage,
     hasPreviousPage,
     isFetchingNextPage,
-    isFetchingPreviousPage, 
+    isFetchingPreviousPage,
   } = useUserQuery({
     queryKey,
   });
 
   useUserScroll({
     userRef,
-    loadMoreTop: fetchPreviousPage, 
+    loadMoreTop: fetchPreviousPage,
     loadMoreBottom: fetchNextPage,
     shouldLoadMore: !isFetchingNextPage && !isFetchingPreviousPage && (!!hasNextPage || !!hasPreviousPage),
     isFetchingNextPage: isFetchingNextPage || isFetchingPreviousPage,
@@ -68,9 +68,12 @@ const ListUser = () => {
       formData.append('isGroup', isGroup.toString());
 
       const response = await axios.post(`${HOST}/api/conversations`, formData, {
-       
+        headers: {
+          'Content-Type': 'application/json',
+        },
         withCredentials: true,
       });
+
 
       if (response.status === 200 || response.status === 201) {
         navigate(`/conversations/${response.data.conversation._id}`);
